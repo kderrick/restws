@@ -17,11 +17,11 @@ public class PatientSerivceImpl implements PatientService {
 
 	Map<Long, Patient> patients = new HashMap<>();
 	long currentId = 123;
-	
+
 	public PatientSerivceImpl() {
 		init();
 	}
-	
+
 	void init() {
 		Patient patient = new Patient();
 		patient.setId(currentId);
@@ -31,7 +31,7 @@ public class PatientSerivceImpl implements PatientService {
 
 	@Override
 	public List<Patient> getPatients() {
-		Collection<Patient> results =  patients.values();
+		Collection<Patient> results = patients.values();
 		List<Patient> response = new ArrayList<>(results);
 		return response;
 	}
@@ -52,15 +52,27 @@ public class PatientSerivceImpl implements PatientService {
 	public Response updatePatient(Patient patient) {
 		Patient currentPatient = patients.get(patient.getId());
 		Response response;
-		if(currentPatient != null) {
+		if (currentPatient != null) {
 			patients.put(patient.getId(), patient);
 			response = Response.ok().build();
 		} else {
 			response = Response.notModified().build();
 		}
-		
+
 		return null;
 	}
-	
-	
+
+	@Override
+	public Response deletePatient(Long id) {
+		Patient patient = patients.get(id);
+
+		Response response;
+		if (patient != null) {
+			response = Response.ok().build();
+		} else {
+			response = Response.notModified().build();
+		}
+		return response;
+	}
+
 }
